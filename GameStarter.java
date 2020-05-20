@@ -2,7 +2,7 @@ public class GameStarter
 {
     public static void main(String[] args) 
     {
-       GameArena PoolTable = new GameArena(1000,500,true);
+       GameArena PoolTable = new GameArena(1000,550,true);
        Text Welcome = new Text("Welcome To Cool Pool!",10,50,8,"WHITE",1); 
        PoolTable.addText(Welcome);
        Rectangle GreenBit = new Rectangle(30,30,900,450,"#006400",1);
@@ -61,13 +61,13 @@ public class GameStarter
        PoolTable.addBall(YellowBall6);
        Ball YellowBall7 = new Ball(775,277,20,"YELLOW",4);
        PoolTable.addBall(YellowBall7);
-       Line PoolCue = new Line(238,255,900,255,3,"WHITE",5);
+       Line PoolCue = new Line(212,255,-450,255,3,"WHITE",5);
        PoolTable.addLine(PoolCue);
-       Rectangle EmptyBar = new Rectangle(970,30,20,450,"LIGHTGREY",4);
+       Rectangle EmptyBar = new Rectangle(970,30,20,500,"LIGHTGREY",4);
        PoolTable.addRectangle(EmptyBar);
-       Rectangle RedBar = new Rectangle(970,250,20,230,"RED",5);
+       Rectangle RedBar = new Rectangle(970,280,20,250,"RED",5);
        PoolTable.addRectangle(RedBar);
-       
+       double Power = 0.5;
        while (true)
        {    
         if (PoolTable.leftPressed() == true)
@@ -104,10 +104,11 @@ public class GameStarter
         }
         else if (PoolTable.upPressed() == true)
         {
-         if (RedBar.getHeight() < 450)
+         if (RedBar.getHeight() < 500)
          {
           RedBar.setYPosition(RedBar.getYPosition() - 10);
           RedBar.setHeight(RedBar.getHeight() + 10);
+          Power += 0.02;
          }
          try
          {
@@ -125,6 +126,51 @@ public class GameStarter
          {
           RedBar.setYPosition(RedBar.getYPosition() + 10);
           RedBar.setHeight(RedBar.getHeight() - 10);
+          Power += -0.02;
+         }
+         try
+         {
+          Thread.sleep(100);
+         }
+         catch(InterruptedException ex)
+         {
+          Thread.currentThread().interrupt();
+         }     
+        }
+        else if (PoolTable.spacePressed() == true)
+        {
+         double changeInY = Power * (PoolCue.getYStart() - PoolCue.getYEnd()) / 100;
+         double changeInX = Power * (PoolCue.getXStart() - PoolCue.getXEnd()) / 100;
+         while (Math.abs(changeInX) > 1 || Math.abs(changeInY) > 1)   
+         {  
+          CueBall.move(changeInX,changeInY);
+          changeInX = changeInX * 0.99;
+          changeInY = changeInY * 0.99;
+          if(CueBall.getXPosition() < 30 && changeInX < 0)
+          {
+           changeInX = - changeInX;   
+          }
+          else if(CueBall.getXPosition() > 930 && changeInX > 0)
+          {
+           changeInX = - changeInX;     
+          }
+          if(CueBall.getYPosition() < 30 && changeInY < 0)
+          {
+           changeInY = - changeInY;   
+          }
+          else if(CueBall.getYPosition() > 480 && changeInY > 0)
+          {
+           changeInY = - changeInY;     
+          }
+          try
+         {
+          Thread.sleep(10);
+         }
+         catch(InterruptedException ex)
+         {
+          Thread.currentThread().interrupt();
+         } 
+         
          }
          try
          {
