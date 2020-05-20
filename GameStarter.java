@@ -63,6 +63,10 @@ public class GameStarter
        PoolTable.addBall(YellowBall7);
        Line PoolCue = new Line(238,255,900,255,3,"WHITE",5);
        PoolTable.addLine(PoolCue);
+       Rectangle EmptyBar = new Rectangle(970,30,20,450,"LIGHTGREY",4);
+       PoolTable.addRectangle(EmptyBar);
+       Rectangle RedBar = new Rectangle(970,250,20,230,"RED",5);
+       PoolTable.addRectangle(RedBar);
        
        while (true)
        {    
@@ -97,6 +101,39 @@ public class GameStarter
          {
           Thread.currentThread().interrupt();
          }  
+        }
+        else if (PoolTable.upPressed() == true)
+        {
+         if (RedBar.getHeight() < 450)
+         {
+          RedBar.setYPosition(RedBar.getYPosition() - 10);
+          RedBar.setHeight(RedBar.getHeight() + 10);
+         }
+         try
+         {
+          Thread.sleep(100);
+         }
+         catch(InterruptedException ex)
+         {
+           Thread.currentThread().interrupt();
+         }
+         
+        }
+        else if (PoolTable.downPressed() == true)
+        {  
+         if (10 < RedBar.getHeight())
+         {
+          RedBar.setYPosition(RedBar.getYPosition() + 10);
+          RedBar.setHeight(RedBar.getHeight() - 10);
+         }
+         try
+         {
+          Thread.sleep(100);
+         }
+         catch(InterruptedException ex)
+         {
+          Thread.currentThread().interrupt();
+         }     
         }
         else
         {
