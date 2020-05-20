@@ -1,5 +1,7 @@
-public class GameStarter {
-    public static void main(String[] args) {
+public class GameStarter 
+{
+    public static void main(String[] args) 
+    {
        GameArena PoolTable = new GameArena(1000,500,true);
        Text Welcome = new Text("Welcome To Cool Pool!",10,50,8,"WHITE",1); 
        PoolTable.addText(Welcome);
@@ -59,6 +61,64 @@ public class GameStarter {
        PoolTable.addBall(YellowBall6);
        Ball YellowBall7 = new Ball(775,277,20,"YELLOW",4);
        PoolTable.addBall(YellowBall7);
+       Line PoolCue = new Line(238,255,900,255,3,"WHITE",5);
+       PoolTable.addLine(PoolCue);
        
+       while (true)
+       {    
+        if (PoolTable.leftPressed() == true)
+        {
+         double cueEnd1X = rotateCueClockWiseX(225, 255, PoolCue.getXStart(), PoolCue.getYStart() , 3);
+         double cueEnd1Y = rotateCueClockWiseY(225, 255, PoolCue.getXStart(), PoolCue.getYStart() , 3);
+         double cueEnd2X = rotateCueClockWiseX(225, 255, PoolCue.getXEnd(), PoolCue.getYEnd() , 3);
+         double cueEnd2Y = rotateCueClockWiseY(225, 255, PoolCue.getXEnd(), PoolCue.getYEnd() , 3);
+         PoolCue.setLinePosition(cueEnd1X,cueEnd1Y,cueEnd2X,cueEnd2Y);
+         try
+         {
+          Thread.sleep(100);
+         }
+         catch(InterruptedException ex)
+         {
+          Thread.currentThread().interrupt();
+         }
+        }
+        else if (PoolTable.rightPressed() == true)
+        {
+         double cueEnd1X = rotateCueClockWiseX(225, 255, PoolCue.getXStart(), PoolCue.getYStart() , -3);
+         double cueEnd1Y = rotateCueClockWiseY(225, 255, PoolCue.getXStart(), PoolCue.getYStart() , -3);
+         double cueEnd2X = rotateCueClockWiseX(225, 255, PoolCue.getXEnd(), PoolCue.getYEnd() , -3);
+         double cueEnd2Y = rotateCueClockWiseY(225, 255, PoolCue.getXEnd(), PoolCue.getYEnd() , -3);
+         PoolCue.setLinePosition(cueEnd1X,cueEnd1Y,cueEnd2X,cueEnd2Y);
+         try
+         {
+          Thread.sleep(100);
+         }
+         catch(InterruptedException ex)
+         {
+          Thread.currentThread().interrupt();
+         }  
+        }
+        else
+        {
+         try
+        {
+          Thread.sleep(1);
+        }
+        catch(InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+        }
+        }
+       }
     }
+     static double rotateCueClockWiseX(double centreOfRotX, double centreOfRotY, double edgeX, double edgeY, double angle) 
+     {
+      double xRot = centreOfRotX + Math.cos(Math.toRadians(angle)) * (edgeX - centreOfRotX) - Math.sin(Math.toRadians(angle)) * (edgeY - centreOfRotY);
+      return xRot;
+     }
+     static double rotateCueClockWiseY(double centreOfRotX, double centreOfRotY, double edgeX, double edgeY, double angle) 
+     {
+      double yRot = centreOfRotY + Math.sin(Math.toRadians(angle)) * (edgeX - centreOfRotX) + Math.cos(Math.toRadians(angle)) * (edgeY - centreOfRotY);
+      return yRot;
+     }
 }
