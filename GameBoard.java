@@ -8,12 +8,7 @@ public class GameBoard
  private GameArena PoolTable = new GameArena(1000,550,true);
  private Text Welcome = new Text("Welcome To Cool Pool!",10,50,8,"WHITE",1); 
  private Rectangle GreenBit = new Rectangle(30,30,900,450,"#006400",1);
- private Ball TopLeftHole = new Ball(35,30,40,"BLACK",2);
- private Ball BtmLeftHole = new Ball(35,480,40,"BLACK",2);
- private Ball TopMidHole = new Ball(465,30,40,"BLACK",2);
- private Ball BtmMidHole = new Ball(465,480,40,"BLACK",2);
- private Ball TopRightHole = new Ball(925,30,40,"BLACK",2);
- private Ball BtmRightHole = new Ball(925,480,40,"BLACK",2);
+ private Ball BallHoles[] = new Ball[6];
  private Line WhiteLine = new Line(225,30,225,480,1,"WHITE",3);
  private Rectangle TopBrown = new Rectangle(10,10,940,20,"#654321",4);
  private Rectangle BtmBrown = new Rectangle(10,480,940,20,"#654321",4);
@@ -40,6 +35,13 @@ public class GameBoard
   RedBall[5] = new Ball(775,233,20,"RED",4);
   RedBall[6] = new Ball(775,299,20,"RED",4); 
   
+  BallHoles[0] = new Ball(35,30,40,"BLACK",2);
+  BallHoles[1] = new Ball(35,480,40,"BLACK",2);
+  BallHoles[2] = new Ball(465,30,40,"BLACK",2);
+  BallHoles[3] = new Ball(465,480,40,"BLACK",2);
+  BallHoles[4] = new Ball(925,30,40,"BLACK",2);
+  BallHoles[5] = new Ball(925,480,40,"BLACK",2);
+
   YellowBall[0] = new Ball(715,266,20,"YELLOW",4);
   YellowBall[1] = new Ball(735,233,20,"YELLOW",4);
   YellowBall[2] = new Ball(755,244,20,"YELLOW",4);
@@ -55,12 +57,12 @@ public class GameBoard
   }
   PoolTable.addText(Welcome);
   PoolTable.addRectangle(GreenBit);
-  PoolTable.addBall(TopLeftHole);
-  PoolTable.addBall(BtmLeftHole);
-  PoolTable.addBall(TopMidHole);
-  PoolTable.addBall(BtmMidHole);
-  PoolTable.addBall(TopRightHole);
-  PoolTable.addBall(BtmRightHole);
+  PoolTable.addBall(BallHoles[0]);
+  PoolTable.addBall(BallHoles[1]);
+  PoolTable.addBall(BallHoles[2]);
+  PoolTable.addBall(BallHoles[3]);
+  PoolTable.addBall(BallHoles[4]);
+  PoolTable.addBall(BallHoles[5]);
   PoolTable.addLine(WhiteLine);
   PoolTable.addRectangle(TopBrown);
   PoolTable.addRectangle(BtmBrown);
@@ -159,7 +161,7 @@ public class GameBoard
         {
          changeInY[0] = 3 * Power * (PoolCue.getYStart() - PoolCue.getYEnd()) / 100;
          changeInX[0] = 3 * Power * (PoolCue.getXStart() - PoolCue.getXEnd()) / 100;
-         while (Math.abs(changeInX[0]) +  Math.abs(changeInY[0]) + Math.abs(changeInX[1]) + Math.abs(changeInY[1]) + Math.abs(changeInX[2]) + Math.abs(changeInY[2])+ Math.abs(changeInX[3]) + Math.abs(changeInY[3])+ Math.abs(changeInX[4]) + Math.abs(changeInY[4])+ Math.abs(changeInX[5]) + Math.abs(changeInY[5])+ Math.abs(changeInX[6]) + Math.abs(changeInY[6])+ Math.abs(changeInX[7]) + Math.abs(changeInY[7])+ Math.abs(changeInX[8]) + Math.abs(changeInY[8])+ Math.abs(changeInX[9]) + Math.abs(changeInY[9])+ Math.abs(changeInX[10]) + Math.abs(changeInY[10])+ Math.abs(changeInX[11]) + Math.abs(changeInY[11])+ Math.abs(changeInX[12]) + Math.abs(changeInY[12])+ Math.abs(changeInX[13]) + Math.abs(changeInY[13])+ Math.abs(changeInX[14]) + Math.abs(changeInY[14]) + Math.abs(changeInX[15]) + Math.abs(changeInY[15]) > 2)   
+         while (Math.abs(changeInX[0]) +  Math.abs(changeInY[0]) + Math.abs(changeInX[1]) + Math.abs(changeInY[1]) + Math.abs(changeInX[2]) + Math.abs(changeInY[2])+ Math.abs(changeInX[3]) + Math.abs(changeInY[3])+ Math.abs(changeInX[4]) + Math.abs(changeInY[4])+ Math.abs(changeInX[5]) + Math.abs(changeInY[5])+ Math.abs(changeInX[6]) + Math.abs(changeInY[6])+ Math.abs(changeInX[7]) + Math.abs(changeInY[7])+ Math.abs(changeInX[8]) + Math.abs(changeInY[8])+ Math.abs(changeInX[9]) + Math.abs(changeInY[9])+ Math.abs(changeInX[10]) + Math.abs(changeInY[10])+ Math.abs(changeInX[11]) + Math.abs(changeInY[11])+ Math.abs(changeInX[12]) + Math.abs(changeInY[12])+ Math.abs(changeInX[13]) + Math.abs(changeInY[13])+ Math.abs(changeInX[14]) + Math.abs(changeInY[14]) + Math.abs(changeInX[15]) + Math.abs(changeInY[15]) > 0.5)   
          {  
           CueBall.move(changeInX[0],changeInY[0]);
           BlackBall.move(changeInX[1],changeInY[1]);
@@ -173,70 +175,70 @@ public class GameBoard
           changeInX[i] = changeInX[i] * 0.99;
           changeInY[i] = changeInY[i] * 0.99;
           }
-          if(CueBall.getXPosition() < 30 && changeInX[0] < 0)
+          if(CueBall.getXPosition() < 40 && changeInX[0] < 0)
           {
            changeInX[0] = - changeInX[0];   
           }
-          else if(CueBall.getXPosition() > 930 && changeInX[0] > 0)
+          else if(CueBall.getXPosition() > 920 && changeInX[0] > 0)
           {
            changeInX[0] = - changeInX[0];     
           }
-          if(CueBall.getYPosition() < 30 && changeInY[0] < 0)
+          if(CueBall.getYPosition() < 40 && changeInY[0] < 0)
           {
            changeInY[0] = - changeInY[0];   
           }
-          else if(CueBall.getYPosition() > 480 && changeInY[0] > 0)
+          else if(CueBall.getYPosition() > 470 && changeInY[0] > 0)
           {
            changeInY[0] = - changeInY[0];     
           }
-          if(BlackBall.getXPosition() < 30 && changeInX[1] < 0)
+          if(BlackBall.getXPosition() < 40 && changeInX[1] < 0)
           {
            changeInX[1] = - changeInX[1];   
           }
-          else if(BlackBall.getXPosition() > 930 && changeInX[1] > 0)
+          else if(BlackBall.getXPosition() > 920 && changeInX[1] > 0)
           {
            changeInX[1] = - changeInX[1];     
           }
-          if(BlackBall.getYPosition() < 30 && changeInY[1] < 0)
+          if(BlackBall.getYPosition() < 40 && changeInY[1] < 0)
           {
            changeInY[1] = - changeInY[1];   
           }
-          else if(BlackBall.getYPosition() > 480 && changeInY[1] > 0)
+          else if(BlackBall.getYPosition() > 470 && changeInY[1] > 0)
           {
            changeInY[1] = - changeInY[1];     
           }
 
           for (int i=0;i<7;i++)
           {
-           if(RedBall[i].getXPosition() < 30 && changeInX[i+2] < 0)
+           if(RedBall[i].getXPosition() < 40 && changeInX[i+2] < 0)
            {
             changeInX[i+2] = - changeInX[i+2];   
            }
-           else if(RedBall[i].getXPosition() > 930 && changeInX[i+2] > 0)
+           else if(RedBall[i].getXPosition() > 920 && changeInX[i+2] > 0)
            {
             changeInX[i+2] = - changeInX[i+2];     
            }
-           if(RedBall[i].getYPosition() < 30 && changeInY[i+2] < 0)
+           if(RedBall[i].getYPosition() < 40 && changeInY[i+2] < 0)
            {
             changeInY[i+2] = - changeInY[i+2];   
            }
-           else if(RedBall[i].getYPosition() > 480 && changeInY[i+2] > 0)
+           else if(RedBall[i].getYPosition() > 470 && changeInY[i+2] > 0)
            {
             changeInY[i+2] = - changeInY[i+2];     
            }
-           if(YellowBall[i].getXPosition() < 30 && changeInX[i+9] < 0)
+           if(YellowBall[i].getXPosition() < 40 && changeInX[i+9] < 0)
            {
             changeInX[i+9] = - changeInX[i+9];   
            }
-           else if(YellowBall[i].getXPosition() > 930 && changeInX[i+9] > 0)
+           else if(YellowBall[i].getXPosition() > 920 && changeInX[i+9] > 0)
            {
             changeInX[i+9] = - changeInX[i+9];     
            }
-           if(YellowBall[i].getYPosition() < 30 && changeInY[i+9] < 0)
+           if(YellowBall[i].getYPosition() < 40 && changeInY[i+9] < 0)
            {
             changeInY[i+9] = - changeInY[i+9];   
            }
-           else if(YellowBall[i].getYPosition() > 480 && changeInY[i+9] > 0)
+           else if(YellowBall[i].getYPosition() > 470 && changeInY[i+9] > 0)
            {
             changeInY[i+9] = - changeInY[i+9];     
            }   
@@ -261,22 +263,55 @@ public class GameBoard
            for(int j=0; j<7; j++)
            {
             if (RedBall[i].collides(RedBall[j]) == true && i != j)
-           {
-            deflect(RedBall[i], RedBall[j] ,changeInX[i+2],changeInX[j+2],changeInY[i+2],changeInY[j+2]); 
+            { 
+             deflect(RedBall[i], RedBall[j] ,changeInX[i+2],changeInX[j+2],changeInY[i+2],changeInY[j+2]); 
+            }
+            if (RedBall[i].collides(YellowBall[j]) == true )
+            {
+             deflect(RedBall[i], YellowBall[j] , changeInX[i+2],changeInX[j+9],changeInY[i+2],changeInY[j+9]); 
+            }
+            if (YellowBall[i].collides(RedBall[j]) == true )
+            {
+             deflect(YellowBall[i], RedBall[j] ,changeInX[i+9],changeInX[j+2],changeInY[i+9],changeInY[j+2]); 
+            }
+            if (YellowBall[i].collides(YellowBall[j]) == true && i != j )
+            {
+             deflect(YellowBall[i], YellowBall[j] , changeInX[i+9],changeInX[j+9],changeInY[i+9],changeInY[j+9]); 
+            }
            }
-           if (RedBall[i].collides(YellowBall[j]) == true )
-           {
-            deflect(RedBall[i], YellowBall[j] , changeInX[i+2],changeInX[j+9],changeInY[i+2],changeInY[j+9]); 
+           if (RedBall[i].collides(BlackBall) == true)
+           { 
+            deflect(RedBall[i], BlackBall ,changeInX[i+2],changeInX[1],changeInY[i+2],changeInY[1]); 
            }
-           if (YellowBall[i].collides(RedBall[j]) == true )
+           if (YellowBall[i].collides(BlackBall) == true )
            {
-            deflect(YellowBall[i], RedBall[j] ,changeInX[i+9],changeInX[j+2],changeInY[i+9],changeInY[j+2]); 
+            deflect(YellowBall[i], BlackBall ,changeInX[i+9],changeInX[1],changeInY[i+9],changeInY[1]); 
            }
-           if (YellowBall[i].collides(YellowBall[j]) == true && i != j )
+          }
+          for(int j=0; j<6; j++)
+          {
+           for(int i=0; i<7; i++)
            {
-            deflect(YellowBall[i], YellowBall[j] , changeInX[i+9],changeInX[j+9],changeInY[i+9],changeInY[j+9]); 
-           }   
+            if (RedBall[i].collides(BallHoles[j]) == true)
+            {
+             PoolTable.removeBall(RedBall[i]); 
+            }
+            if (YellowBall[i].collides(BallHoles[j]) == true )
+            {
+             PoolTable.removeBall(YellowBall[i]);  
+            }
            }
+            if (CueBall.collides(BallHoles[j]) == true )
+            {
+             CueBall.setXPosition(225);
+             CueBall.setYPosition(255);
+             changeInX[0] = 0;
+             changeInY[0] = 0;  
+            }
+            else if(BlackBall.collides(BallHoles[j]) == true )
+            {
+             PoolTable.removeBall(BlackBall);
+            }
           }
           try
           {
@@ -300,7 +335,7 @@ public class GameBoard
          catch(InterruptedException ex)
          {
           Thread.currentThread().interrupt();
-         } 
+         }
          PoolCue.setLinePosition(CueBall.getXPosition() - 13,CueBall.getYPosition(), CueBall.getXPosition() - 675, CueBall.getYPosition());    
         }
         else
