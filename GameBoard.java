@@ -5,6 +5,7 @@ import java.lang.Math;
 
 public class GameBoard
 {
+ //This creates the objects and variables needed, all are private to avoid accidental value changes.
  private GameArena PoolTable = new GameArena(1000,550,true);
  private Text Welcome = new Text("Welcome To Cool Pool!",10,50,8,"WHITE",1); 
  private Rectangle GreenBit = new Rectangle(30,30,900,450,"#006400",1);
@@ -27,6 +28,7 @@ public class GameBoard
  private double changeInY[] = new double[16];
  public GameBoard()
  {
+  //This fills the arrays created with data.
   RedBall[0] = new Ball(695,255,20,"RED",4);  
   RedBall[1] = new Ball(715,244,20,"RED",4);
   RedBall[2] = new Ball(735,277,20,"RED",4);
@@ -55,6 +57,7 @@ public class GameBoard
    changeInX[i] = 0;
    changeInY[i] = 0;   
   }
+  //This adds all of the components to the arena.
   PoolTable.addText(Welcome);
   PoolTable.addRectangle(GreenBit);
   PoolTable.addBall(BallHoles[0]);
@@ -87,9 +90,10 @@ public class GameBoard
   PoolTable.addLine(PoolCue);
   PoolTable.addRectangle(EmptyBar);
   PoolTable.addRectangle(RedBar);
-       
+       //This runs an infinite loop for the game to be played.
        while (true)
-       {    
+       {
+        //If the left arrow key is pressed then the Pool cue rotates clockwise.       
         if (PoolTable.leftPressed() == true)
         {
          double cueEnd1X = rotateCueClockWiseX(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXStart(), PoolCue.getYStart() , 3);
@@ -97,6 +101,7 @@ public class GameBoard
          double cueEnd2X = rotateCueClockWiseX(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXEnd(), PoolCue.getYEnd() , 3);
          double cueEnd2Y = rotateCueClockWiseY(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXEnd(), PoolCue.getYEnd() , 3);
          PoolCue.setLinePosition(cueEnd1X,cueEnd1Y,cueEnd2X,cueEnd2Y);
+         //This adds delay so the key press isn't registered multiple times.
          try
          {
           Thread.sleep(100);
@@ -106,6 +111,7 @@ public class GameBoard
           Thread.currentThread().interrupt();
          }
         }
+        //If the right arrow key is pressed then the Pool cue rotates anti-clockwise. 
         else if (PoolTable.rightPressed() == true)
         {
          double cueEnd1X = rotateCueClockWiseX(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXStart(), PoolCue.getYStart() , -3);
@@ -113,6 +119,7 @@ public class GameBoard
          double cueEnd2X = rotateCueClockWiseX(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXEnd(), PoolCue.getYEnd() , -3);
          double cueEnd2Y = rotateCueClockWiseY(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXEnd(), PoolCue.getYEnd() , -3);
          PoolCue.setLinePosition(cueEnd1X,cueEnd1Y,cueEnd2X,cueEnd2Y);
+         //This adds delay so the key press isn't registered multiple times.
          try
          {
           Thread.sleep(100);
@@ -122,6 +129,7 @@ public class GameBoard
           Thread.currentThread().interrupt();
          }  
         }
+        //If the user presses the up arrow it increases the charge in the power bar for the cue.
         else if (PoolTable.upPressed() == true)
         {
          if (RedBar.getHeight() < 500)
@@ -130,6 +138,7 @@ public class GameBoard
           RedBar.setHeight(RedBar.getHeight() + 10);
           Power += 0.02;
          }
+         //This adds delay so the key press isn't registered multiple times.
          try
          {
           Thread.sleep(100);
@@ -140,6 +149,7 @@ public class GameBoard
          }
          
         }
+        //If the user presses the down arrow it decreases the charge in the power bar for the cue.
         else if (PoolTable.downPressed() == true)
         {  
          if (10 < RedBar.getHeight())
@@ -148,6 +158,7 @@ public class GameBoard
           RedBar.setHeight(RedBar.getHeight() - 10);
           Power += -0.02;
          }
+         //This adds delay so the key press isn't registered multiple times.
          try
          {
           Thread.sleep(100);
@@ -157,12 +168,16 @@ public class GameBoard
           Thread.currentThread().interrupt();
          }     
         }
+        //If the user pressed space it fires the cue thus hitting the Cue ball.
         else if (PoolTable.spacePressed() == true)
         {
+         //This sets the values of the horizontal and vertical speed of the cue ball.   
          changeInY[0] = 3 * Power * (PoolCue.getYStart() - PoolCue.getYEnd()) / 100;
          changeInX[0] = 3 * Power * (PoolCue.getXStart() - PoolCue.getXEnd()) / 100;
+         //This runs a loop so long as the balls are somewhat still moving.
          while (Math.abs(changeInX[0]) +  Math.abs(changeInY[0]) + Math.abs(changeInX[1]) + Math.abs(changeInY[1]) + Math.abs(changeInX[2]) + Math.abs(changeInY[2])+ Math.abs(changeInX[3]) + Math.abs(changeInY[3])+ Math.abs(changeInX[4]) + Math.abs(changeInY[4])+ Math.abs(changeInX[5]) + Math.abs(changeInY[5])+ Math.abs(changeInX[6]) + Math.abs(changeInY[6])+ Math.abs(changeInX[7]) + Math.abs(changeInY[7])+ Math.abs(changeInX[8]) + Math.abs(changeInY[8])+ Math.abs(changeInX[9]) + Math.abs(changeInY[9])+ Math.abs(changeInX[10]) + Math.abs(changeInY[10])+ Math.abs(changeInX[11]) + Math.abs(changeInY[11])+ Math.abs(changeInX[12]) + Math.abs(changeInY[12])+ Math.abs(changeInX[13]) + Math.abs(changeInY[13])+ Math.abs(changeInX[14]) + Math.abs(changeInY[14]) + Math.abs(changeInX[15]) + Math.abs(changeInY[15]) > 0.5)   
          {  
+          //This moves all of the balls based on the array containg the movement speeds.   
           CueBall.move(changeInX[0],changeInY[0]);
           BlackBall.move(changeInX[1],changeInY[1]);
           for (int i=0;i<7;i++)
@@ -170,11 +185,13 @@ public class GameBoard
            RedBall[i].move(changeInX[i+2],changeInY[i+2]);   
            YellowBall[i].move(changeInX[i+9],changeInY[i+9]);  
           }
+          //This applies friction to all of the speeds.
           for (int i = 0;i < 16; i++)
           {
           changeInX[i] = changeInX[i] * 0.99;
           changeInY[i] = changeInY[i] * 0.99;
           }
+          //This makes sure if any of the balls are about to leave the table they bounce off of the cushions
           if(CueBall.getXPosition() < 40 && changeInX[0] < 0)
           {
            changeInX[0] = - changeInX[0];   
@@ -243,6 +260,7 @@ public class GameBoard
             changeInY[i+9] = - changeInY[i+9];     
            }   
           }
+          //This is used to deflect balls when they collide.
           if (CueBall.collides(BlackBall) == true )
           {
            deflect(CueBall, BlackBall, changeInX[0],changeInX[1],changeInY[0],changeInY[1]); 
@@ -288,6 +306,7 @@ public class GameBoard
             deflect(YellowBall[i], BlackBall ,changeInX[i+9],changeInX[1],changeInY[i+9],changeInY[1]); 
            }
           }
+          //This checks if any of the balls have collided with the holes and if they have it pots them and removes them from the board.
           for(int j=0; j<6; j++)
           {
            for(int i=0; i<7; i++)
@@ -323,6 +342,7 @@ public class GameBoard
           } 
          
          }
+         //This resets all of the speeds so there's no left over velocity on the next hit.
          for (int i = 0;i < 16; i++)
           {
           changeInX[i] = 0;
@@ -336,6 +356,7 @@ public class GameBoard
          {
           Thread.currentThread().interrupt();
          }
+         //This moves the pool cue with the cue ball.
          PoolCue.setLinePosition(CueBall.getXPosition() - 13,CueBall.getYPosition(), CueBall.getXPosition() - 675, CueBall.getYPosition());    
         }
         else
@@ -351,7 +372,8 @@ public class GameBoard
         }
        }
     }
-    static double rotateCueClockWiseX(double centreOfRotX, double centreOfRotY, double edgeX, double edgeY, double angle) 
+    //This is used to rotate the cue clockwise.
+    double rotateCueClockWiseX(double centreOfRotX, double centreOfRotY, double edgeX, double edgeY, double angle) 
     {
      double xRot = centreOfRotX + Math.cos(Math.toRadians(angle)) * (edgeX - centreOfRotX) - Math.sin(Math.toRadians(angle)) * (edgeY - centreOfRotY);
      return xRot;
