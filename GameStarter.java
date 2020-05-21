@@ -72,10 +72,10 @@ public class GameStarter
        {    
         if (PoolTable.leftPressed() == true)
         {
-         double cueEnd1X = rotateCueClockWiseX(225, 255, PoolCue.getXStart(), PoolCue.getYStart() , 3);
-         double cueEnd1Y = rotateCueClockWiseY(225, 255, PoolCue.getXStart(), PoolCue.getYStart() , 3);
-         double cueEnd2X = rotateCueClockWiseX(225, 255, PoolCue.getXEnd(), PoolCue.getYEnd() , 3);
-         double cueEnd2Y = rotateCueClockWiseY(225, 255, PoolCue.getXEnd(), PoolCue.getYEnd() , 3);
+         double cueEnd1X = rotateCueClockWiseX(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXStart(), PoolCue.getYStart() , 3);
+         double cueEnd1Y = rotateCueClockWiseY(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXStart(), PoolCue.getYStart() , 3);
+         double cueEnd2X = rotateCueClockWiseX(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXEnd(), PoolCue.getYEnd() , 3);
+         double cueEnd2Y = rotateCueClockWiseY(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXEnd(), PoolCue.getYEnd() , 3);
          PoolCue.setLinePosition(cueEnd1X,cueEnd1Y,cueEnd2X,cueEnd2Y);
          try
          {
@@ -88,10 +88,10 @@ public class GameStarter
         }
         else if (PoolTable.rightPressed() == true)
         {
-         double cueEnd1X = rotateCueClockWiseX(225, 255, PoolCue.getXStart(), PoolCue.getYStart() , -3);
-         double cueEnd1Y = rotateCueClockWiseY(225, 255, PoolCue.getXStart(), PoolCue.getYStart() , -3);
-         double cueEnd2X = rotateCueClockWiseX(225, 255, PoolCue.getXEnd(), PoolCue.getYEnd() , -3);
-         double cueEnd2Y = rotateCueClockWiseY(225, 255, PoolCue.getXEnd(), PoolCue.getYEnd() , -3);
+         double cueEnd1X = rotateCueClockWiseX(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXStart(), PoolCue.getYStart() , -3);
+         double cueEnd1Y = rotateCueClockWiseY(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXStart(), PoolCue.getYStart() , -3);
+         double cueEnd2X = rotateCueClockWiseX(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXEnd(), PoolCue.getYEnd() , -3);
+         double cueEnd2Y = rotateCueClockWiseY(CueBall.getXPosition(), CueBall.getYPosition(), PoolCue.getXEnd(), PoolCue.getYEnd() , -3);
          PoolCue.setLinePosition(cueEnd1X,cueEnd1Y,cueEnd2X,cueEnd2Y);
          try
          {
@@ -139,8 +139,8 @@ public class GameStarter
         }
         else if (PoolTable.spacePressed() == true)
         {
-         double changeInY = Power * (PoolCue.getYStart() - PoolCue.getYEnd()) / 100;
-         double changeInX = Power * (PoolCue.getXStart() - PoolCue.getXEnd()) / 100;
+         double changeInY = 3 * Power * (PoolCue.getYStart() - PoolCue.getYEnd()) / 100;
+         double changeInX = 3 * Power * (PoolCue.getXStart() - PoolCue.getXEnd()) / 100;
          while (Math.abs(changeInX) > 1 || Math.abs(changeInY) > 1)   
          {  
           CueBall.move(changeInX,changeInY);
@@ -174,12 +174,13 @@ public class GameStarter
          }
          try
          {
-          Thread.sleep(100);
+          Thread.sleep(10);
          }
          catch(InterruptedException ex)
          {
           Thread.currentThread().interrupt();
-         }     
+         } 
+         PoolCue.setLinePosition(CueBall.getXPosition() - 12,CueBall.getYPosition(), CueBall.getXPosition() - 675, CueBall.getYPosition());    
         }
         else
         {
